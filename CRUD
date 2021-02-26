@@ -1,0 +1,212 @@
+mysql> USE yjdev;
+Database changed
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_yjdev |
++-----------------+
+| topic           |
++-----------------+
+1 row in set (0.15 sec)
+
+mysql> DESC topic;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| title       | varchar(100) | NO   |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| created     | datetime     | NO   |     | NULL    |                |
+| author      | varchar(30)  | YES  |     | NULL    |                |
+| profile     | varchar(100) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.06 sec)
+
+mysql> INSERT INTO topic (title, description, created, author, profile) VALUES('MYSQL', 'MySQL is ...', NOW(), 'yj', 'developer');
+Query OK, 1 row affected (0.49 sec)
+
+mysql> SELECT * FROM topic;
++----+-------+--------------+---------------------+--------+-----------+
+| id | title | description  | created             | author | profile   |
++----+-------+--------------+---------------------+--------+-----------+
+|  1 | MYSQL | MySQL is ... | 2021-02-26 10:22:59 | yj     | developer |
++----+-------+--------------+---------------------+--------+-----------+
+1 row in set (1.23 sec)
+
+mysql> INSERT INTO topic (title, description, created, author, profile) VALUES('ORACLE', 'ORACLE is ...', NOW(), 'egoing', 'developer');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> SELECT * FROM topic;
++----+--------+---------------+---------------------+--------+-----------+
+| id | title  | description   | created             | author | profile   |
++----+--------+---------------+---------------------+--------+-----------+
+|  1 | MYSQL  | MySQL is ...  | 2021-02-26 10:22:59 | yj     | developer |
+|  2 | ORACLE | ORACLE is ... | 2021-02-26 10:25:10 | egoing | developer |
++----+--------+---------------+---------------------+--------+-----------+
+2 rows in set (0.17 sec)
+
+mysql> INSERT INTO topic (title, description, created, author, profile) VALUES('SQL Server', 'SQL Server is ...', NOW(), 'duru', 'adminustrator');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO topic (title, description, created, author, profile) VALUES('PostgreSQL', 'PostgreSQL is ...', NOW(), 'taeha', 'data scientist, developer');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO topic (title, description, created, author, profile) VALUES('MonogDB', 'MongoDB is ...', NOW(), 'yj', 'developer');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | ORACLE     | ORACLE is ...     | 2021-02-26 10:25:10 | egoing | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | adminustrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.06 sec)
+
+mysql> UPDATE topic
+    -> SET profile = 'administrator'
+    -> WHERE id = 3;
+Query OK, 1 row affected (0.28 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | ORACLE     | ORACLE is ...     | 2021-02-26 10:25:10 | egoing | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT id, title, created, author FROM topic;
++----+------------+---------------------+--------+
+| id | title      | created             | author |
++----+------------+---------------------+--------+
+|  1 | MYSQL      | 2021-02-26 10:22:59 | yj     |
+|  2 | ORACLE     | 2021-02-26 10:25:10 | egoing |
+|  3 | SQL Server | 2021-02-26 10:26:34 | duru   |
+|  4 | PostgreSQL | 2021-02-26 10:27:28 | taeha  |
+|  5 | MonogDB    | 2021-02-26 10:28:05 | yj     |
++----+------------+---------------------+--------+
+5 rows in set (0.17 sec)
+
+mysql> SELECT "egoing";
++--------+
+| egoing |
++--------+
+| egoing |
++--------+
+1 row in set (0.13 sec)
+
+mysql> SELECT "egoing", 1+!;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT "egoing", 1+1;
++--------+-----+
+| egoing | 1+1 |
++--------+-----+
+| egoing |   2 |
++--------+-----+
+1 row in set (0.01 sec)
+
+mysql> SELECT id, title, created, author FROM topic WHERE author='yj';
++----+---------+---------------------+--------+
+| id | title   | created             | author |
++----+---------+---------------------+--------+
+|  1 | MYSQL   | 2021-02-26 10:22:59 | yj     |
+|  5 | MonogDB | 2021-02-26 10:28:05 | yj     |
++----+---------+---------------------+--------+
+2 rows in set (0.13 sec)
+
+mysql> SELECT id, title, created, author FROM topic WHERE author='yj'
+    -> ORDER BY id DESC;
++----+---------+---------------------+--------+
+| id | title   | created             | author |
++----+---------+---------------------+--------+
+|  5 | MonogDB | 2021-02-26 10:28:05 | yj     |
+|  1 | MYSQL   | 2021-02-26 10:22:59 | yj     |
++----+---------+---------------------+--------+
+2 rows in set (0.21 sec)
+
+mysql> SELECT id, title, created, author FROM topic WHERE author='yj' ORDER BY id DESC LIMIT 1;
++----+---------+---------------------+--------+
+| id | title   | created             | author |
++----+---------+---------------------+--------+
+|  5 | MonogDB | 2021-02-26 10:28:05 | yj     |
++----+---------+---------------------+--------+
+1 row in set (0.19 sec)
+
+mysql> SELECT * FROM topic
+    -> ;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | ORACLE     | ORACLE is ...     | 2021-02-26 10:25:10 | egoing | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.12 sec)
+
+mysql> UPDATE topic SET author='yj', title='Oracle' WHERE id=2;
+Query OK, 1 row affected (0.23 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | Oracle     | ORACLE is ...     | 2021-02-26 10:25:10 | yj     | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.03 sec)
+
+mysql> UPDATE topic SET description='Oracle is ...' WHERE id=2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | Oracle     | Oracle is ...     | 2021-02-26 10:25:10 | yj     | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | Oracle     | Oracle is ...     | 2021-02-26 10:25:10 | yj     | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
+|  5 | MonogDB    | MongoDB is ...    | 2021-02-26 10:28:05 | yj     | developer                 |
++----+------------+-------------------+---------------------+--------+---------------------------+
+5 rows in set (0.16 sec)
+
+mysql> DELETE FROM topic WHERE id=5;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> SELECT * FROM topic;
++----+------------+-------------------+---------------------+--------+---------------------------+
+| id | title      | description       | created             | author | profile                   |
++----+------------+-------------------+---------------------+--------+---------------------------+
+|  1 | MYSQL      | MySQL is ...      | 2021-02-26 10:22:59 | yj     | developer                 |
+|  2 | Oracle     | Oracle is ...     | 2021-02-26 10:25:10 | yj     | developer                 |
+|  3 | SQL Server | SQL Server is ... | 2021-02-26 10:26:34 | duru   | administrator             |
+|  4 | PostgreSQL | PostgreSQL is ... | 2021-02-26 10:27:28 | taeha  | data scientist, developer |
++----+------------+-------------------+---------------------+--------+---------------------------+
+4 rows in set (0.01 sec)
